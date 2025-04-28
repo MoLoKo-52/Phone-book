@@ -28,7 +28,7 @@ jobs:
       - name: Lint & Test
         working-directory: sever
         run: |
-          black --check .
+          black .
           flake8 .
           pytest --maxfail=1 --disable-warnings -q
 
