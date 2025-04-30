@@ -26,14 +26,21 @@ python server.py
 
 ## Flutter Client setup
 
-## Generate gRPC Client Code
+## Download the build application
+
+[Android (.apk)](https://github.com/MoLoKo-52/Phone-book/releases/download/mvp/app-release.apk)
+
+[MacOS](https://github.com/MoLoKo-52/Phone-book/releases/download/mvp/Runner.app.zip)
+
+[Windows](https://github.com/MoLoKo-52/Phone-book/releases/tag/mvp)
+
+## Connect to the server
+
+Click on the settings icon and write there IP of the host mashine  
+You can check it by command in terminal:
 
 ```bash
-
+ifconfig
 ```
 
-## Run the Client
-
-```bash
-
-```
+Then click apply and the status should become "connected"
