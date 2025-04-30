@@ -32,7 +32,6 @@ python server.py
 
 [MacOS](https://github.com/MoLoKo-52/Phone-book/releases/download/mvp/Runner.app.zip)
 
-[Windows](https://github.com/MoLoKo-52/Phone-book/releases/tag/mvp)
 
 ## Connect to the server
 
