@@ -1,0 +1,26 @@
+# macOS
+.DS_Store
+
+# Flutter
+client/build/
+client/.dart_tool/
+client/.idea/
+client/.packages
+client/pubspec.lock
+
+# Python
+server/__pycache__/
+server/*.pyc
+server/env/
+server/venv/
+server/.env/
+*.egg-info/
+server/myenv/
+
+# VS Code
+.vscode/
+
+# General
+*.log
+*.zip
+*.apk
