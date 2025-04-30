@@ -14,7 +14,7 @@ class MainPage extends ConsumerStatefulWidget {
   @override
   ConsumerState<MainPage> createState() => _MainPageState();
 }
-
+/// MainPage with all the widgets
 class _MainPageState extends ConsumerState<MainPage> {
   TextEditingController controller = TextEditingController();
 
@@ -34,7 +34,9 @@ class _MainPageState extends ConsumerState<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    // provider to interact with gRPC and liten changes
     final grpc = ref.watch(grpcServiceProvider);
+    // provider to store user data
     final user = ref.watch(userProvider);
 
     return GestureDetector(
@@ -46,6 +48,7 @@ class _MainPageState extends ConsumerState<MainPage> {
             padding: const EdgeInsets.symmetric(horizontal:16.0),
             child: Stack(
               children: [
+                // top bar with ip and status
                 Align(
                   alignment: Alignment.topLeft,
                   child: Column(
@@ -80,6 +83,7 @@ class _MainPageState extends ConsumerState<MainPage> {
                     ],
                   ),
                 ),
+                // settings to change ip
                 Align(
                   alignment: Alignment.topRight,
                   child: IconButton(
@@ -146,6 +150,7 @@ class _MainPageState extends ConsumerState<MainPage> {
                           },
                         ),
                 ),
+                // search bar and search button
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -241,6 +246,7 @@ class _MainPageState extends ConsumerState<MainPage> {
                       ),
                     ),
                     Padding(padding: EdgeInsets.only(top: 25)),
+                    // appears when user is found
                     if (user.isExist) ...[
                       Container(
                         decoration: BoxDecoration(

@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:client/domain/src/phonebook.pb.dart';
 
 final userProvider = ChangeNotifierProvider((ref) => UserNotifier());
-
+/// UserNotifier for storing user data
 class UserNotifier extends ChangeNotifier {
   String name = "";
   String phone = "";

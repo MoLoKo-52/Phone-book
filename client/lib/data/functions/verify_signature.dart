@@ -1,6 +1,7 @@
 import 'dart:convert' show utf8;
 import 'package:crypto/crypto.dart' show Hmac, sha256;
 
+///Function to verify signature from server
 bool verifySignature(
   String name,
   String number,

@@ -8,6 +8,7 @@ import 'package:client/domain/src/phonebook.pbgrpc.dart';
 
 final grpcServiceProvider = ChangeNotifierProvider((ref) => GrpcService());
 
+/// GrpcService for interacting with gRPC server
 class GrpcService with ChangeNotifier {
   factory GrpcService() {
     return _instance;
@@ -31,7 +32,7 @@ class GrpcService with ChangeNotifier {
     _baseUrl = value;
     _instance.init();
   }
-
+/// Function to create channel for gRPC
   Future<ClientChannel> createChannel([String? baseUrl, int? port]) async {
     const channelOptions = ChannelOptions(
       credentials: ChannelCredentials.insecure(),
@@ -44,9 +45,6 @@ class GrpcService with ChangeNotifier {
     );
 
     final client = PhonebookServiceClient(channel);
-    print('Connecting to ${channel.host}:${channel.port}}');
-    print('[gRPC] baseUrl: ${baseUrl ?? _baseUrl}');
-    print('[gRPC] port: ${port ?? _port}');
     // test request for checking connection
     try {
       await client
@@ -63,7 +61,7 @@ class GrpcService with ChangeNotifier {
 
     return channel;
   }
-
+  /// Function to initialize gRPC
   Future<void> init({String? baseUrl}) async {
     if (baseUrl != null) {
       _baseUrl = baseUrl;
