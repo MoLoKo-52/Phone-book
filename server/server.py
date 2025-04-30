@@ -6,10 +6,11 @@ import hashlib
 import phonebook_pb2
 import phonebook_pb2_grpc
 
-SECRET_KEY = b'supersecretkey'
-PHONEBOOK: dict = {}
-norm_map: dict = {}
+SECRET_KEY = b'supersecretkey'  # Key used for HMAC signature generation
+PHONEBOOK: dict = {}            # Raw phonebook data loaded from file
+norm_map: dict = {}             # Normalized name-to-number mapping for flexible lookup
 
+# Loads phonebook data from JSON file and builds a normalized lookup map
 def load_phonebook(path: str):
     global PHONEBOOK, norm_map
     with open(path, "r", encoding="utf-8") as f:
@@ -18,25 +19,30 @@ def load_phonebook(path: str):
     norm_map = {}
     for fullname, number in PHONEBOOK.items():
         parts = fullname.strip().lower().split()
-        key = " ".join(parts)           
+        key = " ".join(parts)           # Normalize: lowercase and remove extra spaces
         norm_map[key] = number
         if len(parts) == 2:
-            swapped = " ".join(reversed(parts)) 
+            swapped = " ".join(reversed(parts))  # Support "Last First" or "First Last"
             norm_map[swapped] = number
 
+# Creates and returns a gRPC server with a thread pool
 def create_server(max_workers: int = 10) -> grpc.Server:
     return grpc.server(futures.ThreadPoolExecutor(max_workers=max_workers))
 
+# Performs a name lookup in the normalized map
 def lookup(name: str) -> str:
     parts = name.strip().lower().split()
     key = " ".join(parts)
     return norm_map.get(key, "")
 
+# Generates a secure HMAC signature for the response
 def generate_signature(name: str, number: str, found: bool) -> str:
     msg = f"{name}:{number}:{found}".encode()
     return hmac.new(SECRET_KEY, msg, hashlib.sha256).hexdigest()
 
+# gRPC service implementation class
 class PhonebookServicer(phonebook_pb2_grpc.PhonebookServiceServicer):
+    # Handles GetNumberByName RPC request
     def GetNumberByName(self, request, context):
         raw = request.name
         number = lookup(raw)
@@ -49,6 +55,7 @@ class PhonebookServicer(phonebook_pb2_grpc.PhonebookServiceServicer):
             signature=signature
         )
 
+# Entry point: loads data, starts and runs the gRPC server
 def serve():
     print("Loading phonebook...")
     load_phonebook("data.json")
